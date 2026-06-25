@@ -803,23 +803,36 @@ if page == "Patient Risk Assessment":
             }
 
             # Risk card
+# ── SHAP EXPLANATION ──────────────────────────────
+            st.markdown("""
+            <div class="section-head">
+                <span class="section-head-label">Feature Attribution (SHAP)</span>
+                <div class="section-head-line"></div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Compute SHAP values
+            shap_values = explainer(patient)
+            
+            # Create the plot
+            fig, ax = plt.subplots(figsize=(6, 4))
+            # Use a dark-themed style for matplotlib
+            plt.style.use('dark_background')
+            
+            # Generate waterfall plot
+            shap.plots.waterfall(shap_values[0], show=False)
+            
+            # Apply your theme colors to the plot elements
+            plt.gca().set_facecolor('#0C1220')
+            fig.patch.set_facecolor('#080C14')
+            
+            # Display
+            st.pyplot(fig, bbox_inches='tight')
+            
+            # Guidance Text
             st.markdown(f"""
-            <div class="risk-card" style="--risk-color:{risk_color};">
-                <div class="risk-eyebrow">Predicted Mortality Probability</div>
-                <div class="risk-number">{risk:.1f}<span class="risk-pct">%</span></div>
-                <div>
-                    <span class="risk-badge badge-{tier}">{tier_cap} RISK</span>
-                </div>
-                <div class="gauge-wrap">
-                    <div class="gauge-track-outer">
-                        <div class="gauge-fill" style="width:{risk:.1f}%;"></div>
-                    </div>
-                    <div class="gauge-ticks">
-                        <span>0%</span>
-                        <span>LOW &lt;30</span>
-                        <span>MOD 30–60</span>
-                        <span>HIGH &gt;60</span>
-                    </div>
-                </div>
+            <div style="margin-top:20px; padding:15px; border-left:2px solid {risk_color}; 
+                        background:#0F1520; font-size:0.8rem; color:#8A9BBF;">
+                {guidance_text[tier]}
             </div>
             """, unsafe_allow_html=True)

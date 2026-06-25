@@ -754,7 +754,17 @@ if page == "Patient Risk Assessment":
 
         st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
         calculate = st.button("Run Risk Assessment", type="primary")
-
+elif page == "Population Analytics":
+    st.markdown("""
+    <div class="page-header">
+        <div class="page-eyebrow">◈ Population Data</div>
+        <div class="page-title">Population Analytics</div>
+        <div class="page-desc">Historical cohort insights and model performance visualization.</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Example placeholder content
+    st.markdown("<div class='input-panel'>Population insights module under development.</div>", unsafe_allow_html=True)
     # ── RESULTS ──────────────────────────────────────────────
     with right:
 

@@ -20,8 +20,22 @@ st.set_page_config(
 )
 
 # ══════════════════════════════════════════════════════════════
-#  DESIGN TOKENS & CSS (Kept exactly as your original)
+#  DESIGN TOKENS
 # ══════════════════════════════════════════════════════════════
+# Base:       #080C14  (deep navy-black)
+# Surface:    #0F1520  (raised panel)
+# Surface-2:  #161D2E  (inset / inputs)
+# Surface-3:  #1C2438  (borders / dividers)
+# Accent:     #00D4FF  (bioluminescent cyan)
+# Accent-dim: #005F73  (glow underlay)
+# Text-hi:    #E8EDF8  (primary text)
+# Text-mid:   #6A7A9B  (secondary)
+# Text-lo:    #2E3A55  (tertiary / disabled)
+# Risk-hi:    #FF5C6C
+# Risk-mod:   #FFAA00
+# Risk-lo:    #00E5A0
+# ══════════════════════════════════════════════════════════════
+
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
@@ -230,7 +244,7 @@ input[type="number"]:focus {
 .stCaption { color: #2E3A55 !important; font-size: 0.68rem !important; }
 
 /* ══════════════════════════════
-   ANIMATIONS & REMAINING CSS
+   ANIMATIONS
 ══════════════════════════════ */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
@@ -542,23 +556,251 @@ input[type="number"]:focus {
     margin-top: 5px;
 }
 
+/* ── Metric cells ── */
+.m-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin: 14px 0;
+    animation: fadeUp 0.4s 0.1s ease both;
+}
+.m-cell {
+    background: #080C14;
+    border: 1px solid #111827;
+    border-radius: 6px;
+    padding: 12px 10px;
+    text-align: center;
+}
+.m-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2E3A55;
+    margin-bottom: 6px;
+}
+.m-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #B0BCDA;
+}
+
+/* ── Guidance box ── */
+.guidance-box {
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    font-size: 0.79rem;
+    line-height: 1.65;
+    margin: 12px 0;
+    animation: fadeUp 0.4s 0.15s ease both;
+}
+.guidance-high     { background: rgba(255,92,108,0.06);  border-left: 2px solid #FF5C6C; color: #D4909A; }
+.guidance-moderate { background: rgba(255,170,0,0.06);   border-left: 2px solid #FFAA00; color: #C8A040; }
+.guidance-low      { background: rgba(0,229,160,0.06);   border-left: 2px solid #00E5A0; color: #60C4A0; }
+
+/* ── Placeholder ── */
+.placeholder-wrap {
+    background: #0C1220;
+    border: 1px dashed #1C2438;
+    border-radius: 12px;
+    padding: 60px 28px;
+    text-align: center;
+}
+.ph-icon {
+    width: 40px; height: 40px;
+    margin: 0 auto 14px;
+    opacity: 0.12;
+}
+.ph-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4A5A7A;
+    margin-bottom: 8px;
+}
+.ph-body {
+    font-size: 0.75rem;
+    color: #2E3A55;
+    line-height: 1.7;
+}
+
+/* ── Ref table ── */
+.ref-table {
+    background: #0C1220;
+    border: 1px solid #111827;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+.ref-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.6fr;
+    padding: 10px 16px;
+    border-bottom: 1px solid #0D1422;
+    font-size: 0.76rem;
+    align-items: center;
+}
+.ref-row:last-child { border-bottom: none; }
+.ref-head {
+    background: #0D1422;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1C2438;
+}
+.ref-name { color: #4A5A7A; font-family: 'Inter', sans-serif; }
+.ref-range { font-family: 'JetBrains Mono', monospace; color: #00D4FF; font-size: 0.7rem; opacity: 0.8; }
+.ref-note { color: #2E3A55; font-size: 0.72rem; }
+
+/* ── Stat cards (pop analytics) ── */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.stat-card {
+    background: #0C1220;
+    border: 1px solid #111827;
+    border-radius: 10px;
+    padding: 20px 20px 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: #1C2438; }
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00D4FF, transparent);
+    opacity: 0.3;
+}
+.stat-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #2E3A55;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+}
+.stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #E8EDF8;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+.stat-sub {
+    font-size: 0.67rem;
+    color: #2E3A55;
+    margin-top: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Figure card ── */
+.fig-card {
+    background: #0C1220;
+    border: 1px solid #111827;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+}
+.fig-card:hover { border-color: #1C2438; }
+.fig-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #D0D8F0;
+    margin-bottom: 4px;
+}
+.fig-caption {
+    font-size: 0.7rem;
+    color: #2E3A55;
+    line-height: 1.55;
+    margin-bottom: 14px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Perf table ── */
+.perf-table {
+    background: #0C1220;
+    border: 1px solid #111827;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.perf-row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.7fr 2fr;
+    padding: 10px 16px;
+    border-bottom: 1px solid #0D1422;
+    font-size: 0.76rem;
+    align-items: center;
+}
+.perf-row:last-child { border-bottom: none; }
+.perf-head {
+    background: #0D1422;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1C2438;
+}
+.perf-metric { color: #4A5A7A; font-family: 'Inter', sans-serif; }
+.perf-val {
+    font-family: 'JetBrains Mono', monospace;
+    color: #2E3A55;
+    font-size: 0.76rem;
+}
+.perf-note { color: #2E3A55; font-size: 0.7rem; font-family: 'Inter', sans-serif; }
+
+.disclaimer {
+    background: #0C1220;
+    border: 1px solid #0D1422;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 0.68rem;
+    color: #2E3A55;
+    line-height: 1.65;
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
+}
+.disclaimer strong { color: #4A5A7A; }
+
+.shap-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    color: #2E3A55;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+}
 </style>
 """
 
 st.markdown(CSS, unsafe_allow_html=True)
 
+
 # ══════════════════════════════════════════════════════════════
-#  LOAD ARTIFACTS (UPDATED: Removed base_xgb.pkl)
+#  LOAD ARTIFACTS
 # ══════════════════════════════════════════════════════════════
 @st.cache_resource
 def load_artifacts():
     model         = joblib.load('models/mortality_model.pkl')
+    base_model    = joblib.load('models/base_xgb.pkl')
     explainer     = joblib.load('models/shap_explainer.pkl')
     feature_names = joblib.load('models/feature_names.pkl')
     train_medians = joblib.load('models/train_medians.pkl')
-    return model, explainer, feature_names, train_medians
+    return model, base_model, explainer, feature_names, train_medians
 
-model, explainer, feature_names, train_medians = load_artifacts()
+model, base_model, explainer, feature_names, train_medians = load_artifacts()
+
 
 # ══════════════════════════════════════════════════════════════
 #  SIDEBAR
@@ -642,6 +884,7 @@ if page == "Patient Risk Assessment":
     left, right = st.columns([1.05, 0.95], gap="large")
 
     with left:
+
         # — Demographics —
         st.markdown("""
         <div class="section-head">
@@ -754,17 +997,7 @@ if page == "Patient Risk Assessment":
 
         st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
         calculate = st.button("Run Risk Assessment", type="primary")
-elif page == "Population Analytics":
-    st.markdown("""
-    <div class="page-header">
-        <div class="page-eyebrow">◈ Population Data</div>
-        <div class="page-title">Population Analytics</div>
-        <div class="page-desc">Historical cohort insights and model performance visualization.</div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Example placeholder content
-    st.markdown("<div class='input-panel'>Population insights module under development.</div>", unsafe_allow_html=True)
+
     # ── RESULTS ──────────────────────────────────────────────
     with right:
 
@@ -813,36 +1046,303 @@ elif page == "Population Analytics":
             }
 
             # Risk card
-# ── SHAP EXPLANATION ──────────────────────────────
+            st.markdown(f"""
+            <div class="risk-card" style="--risk-color:{risk_color};">
+                <div class="risk-eyebrow">Predicted Mortality Probability</div>
+                <div class="risk-number">{risk:.1f}<span class="risk-pct">%</span></div>
+                <div>
+                    <span class="risk-badge badge-{tier}">{tier_cap} RISK</span>
+                </div>
+                <div class="gauge-wrap">
+                    <div class="gauge-track-outer">
+                        <div class="gauge-fill" style="width:{risk:.1f}%;"></div>
+                    </div>
+                    <div class="gauge-ticks">
+                        <span>0%</span>
+                        <span>LOW &lt;30</span>
+                        <span>MOD 30–60</span>
+                        <span>HIGH &gt;60</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Metric cells
+            st.markdown(f"""
+            <div class="m-grid">
+                <div class="m-cell">
+                    <div class="m-label">Mortality</div>
+                    <div class="m-val" style="color:{risk_color};">{risk:.1f}%</div>
+                </div>
+                <div class="m-cell">
+                    <div class="m-label">Survival</div>
+                    <div class="m-val">{survival:.1f}%</div>
+                </div>
+                <div class="m-cell">
+                    <div class="m-label">Tier</div>
+                    <div class="m-val" style="color:{risk_color};font-size:0.85rem;">{tier_cap}</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Guidance
+            st.markdown(
+                f'<div class="guidance-box guidance-{tier}">{guidance_text[tier]}</div>',
+                unsafe_allow_html=True,
+            )
+
+            # Input summary
+            with st.expander("View input summary", expanded=False):
+                st.dataframe(
+                    pd.DataFrame({
+                        "Parameter": ["Age","Sex","Admission","ICD-9 Category","Insurance",
+                                      "Diagnoses","Procedures","Drugs","ICU","ICU LOS",
+                                      "pH","Creatinine","WBC","Hemoglobin"],
+                        "Value": [age, gender, admission_type, icd_chapter, insurance,
+                                  n_diag, n_proc, n_drugs, icu_flag, f"{icu_los}d",
+                                  ph, f"{creatinine} mg/dL", f"{wbc} ×10³/µL",
+                                  f"{hemoglobin} g/dL"],
+                    }),
+                    use_container_width=True, hide_index=True,
+                )
+
+            # SHAP
             st.markdown("""
-            <div class="section-head">
-                <span class="section-head-label">Feature Attribution (SHAP)</span>
+            <div class="section-head" style="margin-top:1.4rem;">
+                <span class="section-head-label">Feature Contribution (SHAP)</span>
+                <div class="section-head-line"></div>
+            </div>
+            <p class="shap-label">Red bars push risk upward · Blue bars reduce it · Length encodes magnitude</p>
+            """, unsafe_allow_html=True)
+
+            matplotlib.rcParams.update({
+                'figure.facecolor': '#0C1220',
+                'axes.facecolor':   '#0C1220',
+                'axes.edgecolor':   '#1C2438',
+                'axes.labelcolor':  '#4A5A7A',
+                'xtick.color':      '#2E3A55',
+                'ytick.color':      '#6A7A9B',
+                'text.color':       '#B0BCDA',
+                'font.family':      'sans-serif',
+                'font.size':        9,
+                'grid.color':       '#111827',
+                'grid.linewidth':   0.5,
+            })
+
+            shap_vals = explainer(patient)
+            fig, _ = plt.subplots(figsize=(6.5, 5))
+            shap.waterfall_plot(shap_vals[0], show=False, max_display=12)
+            fig = plt.gcf()
+            fig.patch.set_facecolor('#0C1220')
+            for ax in fig.get_axes():
+                ax.set_facecolor('#0C1220')
+            st.pyplot(fig, bbox_inches='tight')
+            plt.close()
+
+        else:
+            st.markdown("""
+            <div class="placeholder-wrap">
+                <svg class="ph-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12h3l2-7 4 14 3-7h3l2-4h1" stroke="#E8EDF8" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="ph-title">Awaiting patient data</div>
+                <div class="ph-body">
+                    Complete all fields and click<br>
+                    <span style="color:#4A5A7A;font-family:'JetBrains Mono',monospace;font-size:0.72rem;">
+                        Run Risk Assessment
+                    </span><br>
+                    to generate a mortality probability and SHAP breakdown.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class="section-head" style="margin-top:1.6rem;">
+                <span class="section-head-label">Reference Ranges</span>
                 <div class="section-head-line"></div>
             </div>
             """, unsafe_allow_html=True)
 
-            # Compute SHAP values
-            shap_values = explainer(patient)
-            
-            # Create the plot
-            fig, ax = plt.subplots(figsize=(6, 4))
-            # Use a dark-themed style for matplotlib
-            plt.style.use('dark_background')
-            
-            # Generate waterfall plot
-            shap.plots.waterfall(shap_values[0], show=False)
-            
-            # Apply your theme colors to the plot elements
-            plt.gca().set_facecolor('#0C1220')
-            fig.patch.set_facecolor('#080C14')
-            
-            # Display
-            st.pyplot(fig, bbox_inches='tight')
-            
-            # Guidance Text
-            st.markdown(f"""
-            <div style="margin-top:20px; padding:15px; border-left:2px solid {risk_color}; 
-                        background:#0F1520; font-size:0.8rem; color:#8A9BBF;">
-                {guidance_text[tier]}
+            st.markdown("""
+            <div class="ref-table">
+                <div class="ref-row ref-head">
+                    <span>Measurement</span><span>Normal range</span><span>Clinical note</span>
+                </div>
+                <div class="ref-row">
+                    <span class="ref-name">Blood pH</span>
+                    <span class="ref-range">7.35 – 7.45</span>
+                    <span class="ref-note">Acid-base homeostasis</span>
+                </div>
+                <div class="ref-row">
+                    <span class="ref-name">Creatinine</span>
+                    <span class="ref-range">0.7 – 1.3 mg/dL</span>
+                    <span class="ref-note">Renal filtration function</span>
+                </div>
+                <div class="ref-row">
+                    <span class="ref-name">WBC</span>
+                    <span class="ref-range">4.5 – 11.0 ×10³/µL</span>
+                    <span class="ref-note">Immune / infectious status</span>
+                </div>
+                <div class="ref-row">
+                    <span class="ref-name">Hemoglobin</span>
+                    <span class="ref-range">≥ 8.0 g/dL</span>
+                    <span class="ref-note">Oxygen-carrying capacity</span>
+                </div>
             </div>
             """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="disclaimer">
+        <strong>Research use only.</strong> This prototype was trained on the MIMIC-III de-identified
+        critical care database (Beth Israel Deaconess Medical Center, 2001–2012). It has not been
+        prospectively validated and must not substitute for clinical judgment or physician review.
+    </div>
+    """, unsafe_allow_html=True)
+
+
+# ══════════════════════════════════════════════════════════════
+#  PAGE 2: POPULATION ANALYTICS
+# ══════════════════════════════════════════════════════════════
+else:
+    st.markdown("""
+    <div class="page-header">
+        <div class="page-eyebrow">◈ Cohort-level analysis</div>
+        <div class="page-title">Population Analytics</div>
+        <div class="page-desc">Global model behaviour, feature importance, and MIMIC-III cohort statistics.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section-head">
+        <span class="section-head-label">Cohort Overview</span>
+        <div class="section-head-line"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total admissions</div>
+            <div class="stat-value">46,476</div>
+            <div class="stat-sub">MIMIC-III de-identified records</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Mortality rate</div>
+            <div class="stat-value">11.5%</div>
+            <div class="stat-sub">In-hospital deaths (positive class)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Features used</div>
+            <div class="stat-value">38</div>
+            <div class="stat-sub">After engineering &amp; selection</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Report figures
+    figures = [
+        ("Exploratory Data Analysis", "reports/figures/eda.png",
+         "Variable distributions, class balance, and bivariate correlations across the MIMIC-III admission cohort."),
+        ("Global SHAP Feature Importance", "reports/figures/shap_global.png",
+         "Mean absolute SHAP values ranked by average contribution to model output across all test-set patients."),
+        ("SHAP Beeswarm Plot", "reports/figures/shap_beeswarm.png",
+         "Individual SHAP values per feature. Colour encodes feature magnitude; x-axis encodes impact direction."),
+    ]
+
+    any_found = False
+    for title, path, cap in figures:
+        if os.path.exists(path):
+            any_found = True
+            st.markdown(f"""
+            <div class="fig-card">
+                <div class="fig-title">{title}</div>
+                <div class="fig-caption">{cap}</div>
+            </div>
+            """, unsafe_allow_html=True)
+            st.image(path, use_column_width=True)
+            st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
+
+    if not any_found:
+        st.markdown("""
+        <div class="placeholder-wrap">
+            <svg class="ph-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#E8EDF8" stroke-width="1.5"/>
+                <path d="M7 17l4-5 3 3 2-2.5L19 17" stroke="#E8EDF8" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            <div class="ph-title">No report figures found</div>
+            <div class="ph-body">
+                Run the training pipeline to generate<br>
+                <code style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#4A5A7A;">
+                    reports/figures/eda.png
+                </code>,
+                <code style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#4A5A7A;">
+                    shap_global.png
+                </code>, and
+                <code style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#4A5A7A;">
+                    shap_beeswarm.png
+                </code>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section-head" style="margin-top:1.6rem;">
+        <span class="section-head-label">Model Performance Reference</span>
+        <div class="section-head-line"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="perf-table">
+        <div class="perf-row perf-head">
+            <span>Metric</span><span>Value</span><span>Notes</span>
+        </div>
+        <div class="perf-row">
+            <span class="perf-metric">AUROC</span>
+            <span class="perf-val">—</span>
+            <span class="perf-note">Primary discrimination metric</span>
+        </div>
+        <div class="perf-row">
+            <span class="perf-metric">AUPRC</span>
+            <span class="perf-val">—</span>
+            <span class="perf-note">Recommended for imbalanced classes</span>
+        </div>
+        <div class="perf-row">
+            <span class="perf-metric">F1 (t = 0.5)</span>
+            <span class="perf-val">—</span>
+            <span class="perf-note">Harmonic mean of precision and recall</span>
+        </div>
+        <div class="perf-row">
+            <span class="perf-metric">Sensitivity</span>
+            <span class="perf-val">—</span>
+            <span class="perf-note">True positive rate (recall)</span>
+        </div>
+        <div class="perf-row">
+            <span class="perf-metric">Specificity</span>
+            <span class="perf-val">—</span>
+            <span class="perf-note">True negative rate</span>
+        </div>
+        <div class="perf-row">
+            <span class="perf-metric">Brier score</span>
+            <span class="perf-val">—</span>
+            <span class="perf-note">Calibration quality — lower is better</span>
+        </div>
+    </div>
+    <p style="font-size:0.67rem;color:#2E3A55;margin-top:8px;font-family:'Inter',sans-serif;">
+        Populate by running
+        <code style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4A5A7A;">
+            scripts/evaluate.py
+        </code>
+        and updating values above.
+    </p>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="disclaimer">
+        <strong>Research use only.</strong> Model trained on MIMIC-III admissions (Beth Israel Deaconess
+        Medical Center, 2001–2012). All performance metrics should be independently validated before any
+        external or clinical application. Provided for educational and research purposes only.
+    </div>
+    """, unsafe_allow_html=True)
